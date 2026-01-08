@@ -1,7 +1,7 @@
 ---
 ---
 # Public VCFs
-VCF file per chromosome of genotypes
+VCF file per chromosome of genotypes only.
 
 ![](assets/bravo_vcf_screen.png)
 

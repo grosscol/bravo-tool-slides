@@ -1,11 +1,12 @@
 ---
 author: Colin Gross
-title: Quick Bravo Update
-date: 2025-09-04
+title: Bravo Overview
+date: 2026-01-06
 ---
 
-# Topics
-- eQTL data
-- Public VCFs
-- Usage
-
+# Data Sets
+- SNVs
+- eQTLs
+- VCFs
+- Structural Variants*
+- Ancestry*

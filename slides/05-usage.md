@@ -1,6 +1,7 @@
 ---
 ---
 # Usage
+Users tallied by login date.
 
 ## Total Users
 ![Cumulative total users by month](assets/run_total.svg)
@@ -10,6 +11,7 @@
 
 ## Summary Stats
 Active and new users by month summary statistics
+
 ```txt
  total_users    active_users    new_users     
  Max.   :2066   Min.   :148.0   Min.   : 47.00  

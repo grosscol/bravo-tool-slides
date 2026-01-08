@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Colin Gross">
-  <meta name="dcterms.date" content="2025-09-04">
-  <title>Quick Bravo Update</title>
+  <meta name="dcterms.date" content="2026-01-06">
+  <title>Bravo Overview</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -103,86 +103,26 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">Quick Bravo Update</h1>
+  <h1 class="title">Bravo Overview</h1>
   <p class="author">Colin Gross</p>
-  <p class="date">2025-09-04</p>
+  <p class="date">2026-01-06</p>
 </section>
 
-<section id="topics" class="title-slide slide level1">
-<h1>Topics</h1>
+<section id="data-sets" class="title-slide slide level1">
+<h1>Data Sets</h1>
 <ul>
-<li>eQTL data</li>
-<li>Public VCFs</li>
-<li>Usage</li>
+<li>SNVs</li>
+<li>eQTLs</li>
+<li>VCFs</li>
+<li>Structural Variants*</li>
+<li>Ancestry*</li>
 </ul>
 </section>
 
-<section>
-<section id="eqtl-data" class="title-slide slide level1">
-<h1>eQTL Data</h1>
-<p>Freeze 1 data live on production site</p>
-<p><img data-src="assets/bravo_eqtl_screen.png" /></p>
-</section>
-<section id="data-processed-via-nextflow" class="slide level2">
-<h2>Data Processed via Nextflow</h2>
-<p>Framework standard modular composition.</p>
-<pre class="nf"><code>workflow susie_eqtl {
-  analysis_type = &quot;susie&quot;
-  susie_tsv     = channel.fromPath(&quot;${params.susie_eqtl_glob}&quot;)
-  susie_headers = channel.of(params.susie_fields).collect()
-  fields        = params.susie_fields
-  types         = params.susie_types
-
-  validate_header(susie_tsv, susie_headers)
-  munge_files(susie_tsv, analysis_type)
-  merge_files(munge_files.out.collect(), 
-              analysis_type, fields, types)
-}</code></pre>
-</section>
-<section id="visualization-in-a-vue-component." class="slide level2">
-<h2>Visualization in a Vue Component.</h2>
-<p>Framework standard modular composition.</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">template</span><span class="dt">&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;child-component&quot;</span><span class="dt">&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> ref</span><span class="op">=</span><span class="st">&quot;eqtltable&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;table-sm&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">template</span><span class="dt">&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Tabulator <span class="im">from</span> <span class="st">&#39;tabulator-tables&#39;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a> <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;EqtlSusieTable&quot;</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
-</section></section>
-<section>
-<section id="public-vcfs" class="title-slide slide level1">
-<h1>Public VCFs</h1>
-<p>VCF file per chromosome of genotypes</p>
-<p><img data-src="assets/bravo_vcf_screen.png" /></p>
-</section>
-<section id="subset-of-annotations" class="slide level2">
-<h2>Subset of Annotations</h2>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>FILTER   INFO</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=150863;AF=0.499881;Het=150863;Hom=0</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=4;AF=1.32539e-05;Het=4;Hom=0</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=9634;AF=0.031922;Het=9494;Hom=70</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=11538;AF=0.0382309;Het=11310;Hom=114</span></code></pre></div>
-</section>
-<section id="ephemeral-links" class="slide level2">
-<h2>Ephemeral Links</h2>
-<ul>
-<li>Time limited pre-signed links</li>
-<li>Data remains in private AWS S3 bucket</li>
-<li>Prevents using BRAVO as live bulk data for scripts</li>
-</ul>
-</section></section>
 <section>
 <section id="usage" class="title-slide slide level1">
 <h1>Usage</h1>
-
+<p>Users tallied by login date.</p>
 </section>
 <section id="total-users" class="slide level2">
 <h2>Total Users</h2>
@@ -203,13 +143,173 @@ month</figcaption>
 <section id="summary-stats" class="slide level2">
 <h2>Summary Stats</h2>
 <p>Active and new users by month summary statistics</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode txt"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> total_users    active_users    new_users     </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> Max.   :2066   Min.   :148.0   Min.   : 47.00  </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                Median :195.0   Median : 78.00  </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                Mean   :198.2   Mean   : 91.60  </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                Max.   :248.0   Max.   :170.00 </span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> total_users    active_users    new_users     </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> Max.   :2066   Min.   :148.0   Min.   : 47.00  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                Median :195.0   Median : 78.00  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                Mean   :198.2   Mean   : 91.60  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                Max.   :248.0   Max.   :170.00 </span></code></pre></div>
 </section></section>
+<section>
+<section id="snv-data" class="title-slide slide level1">
+<h1>SNV Data</h1>
+<p>TopMED Freeze 8 SNV data live on production site</p>
+<ul>
+<li>Region e.g. <a
+href="https://bravo.sph.umich.edu/region.html?chrom=11&amp;start=5225000&amp;stop=5229000">11:5225000-5229000</a></li>
+<li>Gene e.g. <a
+href="https://bravo.sph.umich.edu/gene.html?id=HBB">HBB</a></li>
+<li>Variant e.g. <a
+href="https://bravo.sph.umich.edu/variant.html?id=rs193922562">rs193922562</a></li>
+</ul>
+</section>
+<section id="data-processed-via-nextflow" class="slide level2">
+<h2>Data Processed via Nextflow</h2>
+<p>Framework standard modular composition.</p>
+<pre class="nf"><code>workflow susie_eqtl {
+  analysis_type = &quot;susie&quot;
+  susie_tsv     = channel.fromPath(&quot;${params.susie_eqtl_glob}&quot;)
+  susie_headers = channel.of(params.susie_fields).collect()
+  fields        = params.susie_fields
+  types         = params.susie_types
+
+  validate_header(susie_tsv, susie_headers)
+  munge_files(susie_tsv, analysis_type)
+  merge_files(munge_files.out.collect(), 
+              analysis_type, fields, types)
+}</code></pre>
+</section>
+<section id="ui-vue-components." class="slide level2">
+<h2>UI: Vue Components.</h2>
+<p>Modulararity allows UI components to be developed independently.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">template</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;child-component&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">svg</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;bp-coord-bar&quot;</span><span class="ot"> </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ot">      style</span><span class="op">=</span><span class="st">&quot;display: block;&quot;</span><span class="ot"> height</span><span class="op">=</span><span class="st">&quot;100px&quot;</span><span class="ot"> width</span><span class="op">=</span><span class="st">&quot;100%&quot;</span><span class="ot"> </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ot">      viewBox</span><span class="op">=</span><span class="st">&quot;0 0 1000 100&quot;</span><span class="ot"> preserveAspectRatio</span><span class="op">=</span><span class="st">&quot;none&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&lt;</span><span class="kw">g</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;x-axis-container&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">g</span><span class="dt">&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;/</span><span class="kw">svg</span><span class="dt">&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">template</span><span class="dt">&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="im">import</span> <span class="op">*</span> <span class="im">as</span> d3 <span class="im">from</span> <span class="st">&quot;d3&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="im">export</span> <span class="im">default</span> { <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;BpCoordBar&quot;</span> }</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="eqtl-data" class="title-slide slide level1">
+<h1>eQTL Data</h1>
+<p>Freeze 1 eQTL data live on production site. Based on TopMED freeze 8
+data. <img data-src="assets/bravo_eqtl_screen.png" /></p>
+</section>
+<section id="eqtl-views" class="slide level2">
+<h2>eQTL Views</h2>
+<ul>
+<li><a
+href="https://bravo.sph.umich.edu/gene.html?id=TNF#eqtl">Gene</a></li>
+<li><a
+href="https://bravo.sph.umich.edu/region.html?variant_type=snv&amp;chrom=11&amp;start=5225464&amp;stop=5229395#eqtl">Region</a></li>
+<li><a
+href="https://bravo.sph.umich.edu/variant.html?id=6-31597981-T-G">Variant</a></li>
+</ul>
+</section>
+<section id="data-processed-via-nextflow-1" class="slide level2">
+<h2>Data Processed via Nextflow</h2>
+<p>Framework standard modular composition.</p>
+<pre class="nf"><code>workflow susie_eqtl {
+  analysis_type = &quot;susie&quot;
+  susie_tsv     = channel.fromPath(&quot;${params.susie_eqtl_glob}&quot;)
+  susie_headers = channel.of(params.susie_fields).collect()
+  fields        = params.susie_fields
+  types         = params.susie_types
+
+  validate_header(susie_tsv, susie_headers)
+  munge_files(susie_tsv, analysis_type)
+  merge_files(munge_files.out.collect(), 
+              analysis_type, fields, types)
+}</code></pre>
+</section>
+<section id="visualization-in-a-vue-component." class="slide level2">
+<h2>Visualization in a Vue Component.</h2>
+<p>Framework standard modular composition.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">template</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;child-component&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> ref</span><span class="op">=</span><span class="st">&quot;eqtltable&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;table-sm&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">template</span><span class="dt">&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> Tabulator <span class="im">from</span> <span class="st">&#39;tabulator-tables&#39;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="im">default</span> {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;EqtlSusieTable&quot;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="public-vcfs" class="title-slide slide level1">
+<h1>Public VCFs</h1>
+<p>VCF file per chromosome of genotypes only.</p>
+<p><img data-src="assets/bravo_vcf_screen.png" /></p>
+</section>
+<section id="subset-of-annotations" class="slide level2">
+<h2>Subset of Annotations</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode txt"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>FILTER   INFO</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=150863;AF=0.499881;Het=150863;Hom=0</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=4;AF=1.32539e-05;Het=4;Hom=0</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=9634;AF=0.031922;Het=9494;Hom=70</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>SVM;MIS2 AC=11538;AF=0.0382309;Het=11310;Hom=114</span></code></pre></div>
+</section>
+<section id="ephemeral-links" class="slide level2">
+<h2>Ephemeral Links</h2>
+<ul>
+<li>Time limited pre-signed links</li>
+<li>Data remains in private AWS S3 bucket</li>
+<li>Prevents using BRAVO as live bulk data for scripts</li>
+</ul>
+</section></section>
+<section>
+<section id="structural-variant-data" class="title-slide slide level1">
+<h1>Structural Variant Data</h1>
+<p>Upcoming data will be included in BRAVO’s region views. Large
+(&gt;50bp) insertions, deletions, inversion.</p>
+<ul>
+<li>Data processed</li>
+<li>UI in development</li>
+</ul>
+</section>
+<section id="data-processed" class="slide level2">
+<h2>Data Processed</h2>
+<ul>
+<li>Bash script</li>
+<li>Bespoke c++ tooling</li>
+<li>Based on <a
+href="https://github.com/ryanlayer/samplot">Samplot</a></li>
+<li>Will be translated to nextflow</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract region of interest from CRAM</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-x</span> XA <span class="at">-b</span> <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reference</span> <span class="va">${REF_FILE}</span> <span class="va">${CRAM}</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">${CHR}</span><span class="st">:</span><span class="va">${START}</span><span class="st">-</span><span class="va">${END}</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="va">${PIPE_NAME}</span> <span class="kw">&amp;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all crams in a single pipe</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="va">PIPE_MERGE</span><span class="op">=</span><span class="st">&quot;pipes/pipe_</span><span class="va">${REGION}</span><span class="st">_merge.bam&quot;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mkfifo</span> <span class="st">&quot;</span><span class="va">${PIPE_MERGE}</span><span class="st">&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> merge <span class="at">-f</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">${PIPE_MERGE}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${PIPES</span><span class="op">[@]</span><span class="va">}</span><span class="st">&quot;</span> <span class="kw">&amp;</span></span></code></pre></div>
+</section></section>
+<section id="allele-frequencies" class="title-slide slide level1">
+<h1>Allele Frequencies</h1>
+<p>Upcoming data to be included in BRAVO’s variant views. TopMED
+Ancestry Allele Frequencies.</p>
+<ul>
+<li>Based on TopMED freeze 8 data</li>
+<li>Comliment to gnomAD and 1000Genomes</li>
+</ul>
+</section>
+
 <section id="end-of-line" class="title-slide slide level1">
 <h1>End of Line</h1>
 

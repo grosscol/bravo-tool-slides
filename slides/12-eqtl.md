@@ -3,9 +3,14 @@
 
 # eQTL Data
 
-Freeze 1 data live on production site
-
+Freeze 1 eQTL data live on production site. Based on TopMED freeze 8 data.
 ![](assets/bravo_eqtl_screen.png)
+
+## eQTL Views
+
+- [Gene](https://bravo.sph.umich.edu/gene.html?id=TNF#eqtl)
+- [Region](https://bravo.sph.umich.edu/region.html?variant_type=snv&chrom=11&start=5225464&stop=5229395#eqtl)
+- [Variant](https://bravo.sph.umich.edu/variant.html?id=6-31597981-T-G)
 
 ## Data Processed via Nextflow
 
