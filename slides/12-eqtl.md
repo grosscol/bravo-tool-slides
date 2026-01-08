@@ -3,7 +3,7 @@
 
 # eQTL Data
 
-Freeze 1 eQTL data live on production site. Based on TopMED freeze 8 data.
+Freeze 1 eQTL data live on production site. Based on TopMED freeze 10 data.
 ![](assets/bravo_eqtl_screen.png)
 
 ## eQTL Views

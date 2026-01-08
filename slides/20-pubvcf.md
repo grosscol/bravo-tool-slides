@@ -1,7 +1,7 @@
 ---
 ---
 # Public VCFs
-VCF file per chromosome of genotypes only.
+VCF file per chromosome of Freeze 10 genotypes only.
 
 ![](assets/bravo_vcf_screen.png)
 

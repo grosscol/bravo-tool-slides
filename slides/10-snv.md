@@ -3,7 +3,7 @@
 
 # SNV Data
 
-TopMED Freeze 8 SNV data live on production site
+TopMED Freeze 10 SNV data live on production site
 
 - [Region](https://bravo.sph.umich.edu/region.html?chrom=11&start=5225000&stop=5229000)
 - [Gene](https://bravo.sph.umich.edu/gene.html?id=HBB)
